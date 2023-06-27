@@ -659,7 +659,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
 			 time = getConfig().getInt("startauction-in-seconds");
 			 return;
 		 }
-		currentlyItem = allItems.get(new Random().nextInt(allItems.size()-1));
+		currentlyItem = allItems.get(new Random().nextInt(allItems.size()-1)).clone();
 		time = getConfig().getInt("durationauction-in-seconds");;
 		isStarted = true;
 		notifyPlayers(getString("MESSAGES.auctionstartednew")+"");

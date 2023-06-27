@@ -239,7 +239,7 @@ public class GuiManager {
 			}else if(itemname.equals("§eAdd an item")) {
 				
 			}else {
-				DarkAuction.get().allItems.add(item);
+				DarkAuction.get().allItems.add(item.clone());
 				player.sendMessage("§aItem added correctly!");
 			    openListGui(player,1);
 			}
