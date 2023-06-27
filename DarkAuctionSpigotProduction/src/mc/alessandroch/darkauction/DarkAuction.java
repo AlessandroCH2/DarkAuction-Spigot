@@ -70,7 +70,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
 	public int time = 60*60; //seconds*minutes
 	public int initialCost = 2000;
 	public ItemSender itemSender;
-	public String version = "beta1.3.3_3";
+	public String version = "beta1.3.3_4";
 	public String apiversion = "v??";
 	public String materialname = "";
 	public UpdateChecker updater;
@@ -720,7 +720,28 @@ public class DarkAuction extends JavaPlugin implements Listener{
 				Offer offer = offers.get(i);
 				Player plr = getServer().getPlayer(offer.playername);
 				if(plr == null || EconomyHelper.getMoney(offer.playername) < offer.offer) {
+				
+					
 					offers.remove(offer);
+					
+					Offer offer2 = getHigherOffer();
+					if(offer2 != null) {
+					
+							
+							Bukkit.getScheduler().runTaskAsynchronously(DarkAuction.get(), () -> {
+							
+							double money = 0;
+							if(offer2 == null) money = initialCost;
+							if(offer2 != null) money = offer2.offer+initialCost;
+							//TODO Implement customizable position and more offer options
+							inv.setItem(4, currentlyItem);
+							inv.setItem(5, makeTime());
+							inv.setItem(9*3+4, createGuiItem(Material.GOLD_INGOT,getString("MESSAGES.offer-msg-gui"),"§a"+money+getString("MESSAGES.currencysymbol")));
+							});
+							}
+
+					
+					
 				}
 			}
 			    
