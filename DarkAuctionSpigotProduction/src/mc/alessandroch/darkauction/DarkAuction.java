@@ -119,7 +119,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
 	public String getString(String string) {
 		
 	
-		return config.getString(string).replace("&", "§");
+		return config.getString(string).replace("&", "Â§");
 	}
 	private void setup(String string, String string2) {
 		
@@ -280,7 +280,12 @@ public class DarkAuction extends JavaPlugin implements Listener{
 	        getLogger().info("Your server is running version " + version);
 
 	        
-	        if (version.equals("v1_20_R1")) {
+	        if (version.equals("v1_20_R2")) {
+	            //server is running 1.19.4+
+	        	sender = new ItemSender_1_19_R1();
+	        	apiversion = "v1_20_R2";
+	        	sound = Sound.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON;
+	        }else if (version.equals("v1_20_R1")) {
 	            //server is running 1.19.4+
 	        	sender = new ItemSender_1_19_R1();
 	        	apiversion = "v1_20_R1";
@@ -462,7 +467,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
 		//TODO Implement customizable position and more offer options
 		inv.setItem(4, currentlyItem);
 		inv.setItem(5, makeTime());
-		inv.setItem(9*3+4, createGuiItem(Material.GOLD_INGOT,getString("MESSAGES.offer-msg-gui"),"§a"+money+getString("MESSAGES.currencysymbol")));
+		inv.setItem(9*3+4, createGuiItem(Material.GOLD_INGOT,getString("MESSAGES.offer-msg-gui"),"Â§a"+money+getString("MESSAGES.currencysymbol")));
 		});
 		}
 
@@ -472,7 +477,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
 	        int p2 = time / 60;
 	        int p3 = p2 % 60;
 	        p2 = p2 / 60;
-		return createGuiItem(Material.CLOCK,getString("MESSAGES.remaining-time-msg")+" §f"+p2 + "h " + p3 + "m " + p1+"s");
+		return createGuiItem(Material.CLOCK,getString("MESSAGES.remaining-time-msg")+" Â§f"+p2 + "h " + p3 + "m " + p1+"s");
 	}
 	 @EventHandler
 	    public void onInventoryClick(InventoryClickEvent e) {
@@ -493,7 +498,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
 	       double actualoffer = 0;
 	       Offer offer = getHigherOffer();
 	       if(offer != null) actualoffer = offer.offer;
-	       if(e.getView().getTitle().equals("§0"+name) || e.getView().getTitle().equals(getString("MESSAGES.not-started-auction-msg")))
+	       if(e.getView().getTitle().equals("Â§0"+name) || e.getView().getTitle().equals(getString("MESSAGES.not-started-auction-msg")))
 	        {
 	        	e.setCancelled(true);
 	        
@@ -529,7 +534,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
         	if(args.length > 0) {
         		if(args[0].equals("additem")  && player.hasPermission("darkauction.admin")) {
         			allItems.add(new ItemStack(player.getInventory().getItemInMainHand().clone()));
-        			player.sendMessage("§aItem added to auction");
+        			player.sendMessage("Â§aItem added to auction");
         			return true;
         		}
         		if(args[0].equals("removeitem")  && player.hasPermission("darkauction.admin")) {
@@ -538,13 +543,13 @@ public class DarkAuction extends JavaPlugin implements Listener{
         				int i = Integer.parseInt(args[1]);
         				
         				allItems.remove(i);
-        				player.sendMessage("§aItem removed! check the modified list with /darkauction info");
+        				player.sendMessage("Â§aItem removed! check the modified list with /darkauction info");
         				
         				}catch(Exception e) {
-        					player.sendMessage("§cAn error occured. Are you sure you put a number or maybe the list is too short?");
+        					player.sendMessage("Â§cAn error occured. Are you sure you put a number or maybe the list is too short?");
         				}
         			}else {
-        				player.sendMessage("§cUsage: /darkauction removeitem (number)");	
+        				player.sendMessage("Â§cUsage: /darkauction removeitem (number)");	
         			}
         			
         			
@@ -557,13 +562,13 @@ public class DarkAuction extends JavaPlugin implements Listener{
         				
         				ItemStack stack = allItems.get(i).clone();
         				player.getInventory().addItem(stack);
-        				player.sendMessage("§aItem gived!");
+        				player.sendMessage("Â§aItem gived!");
         				
         				}catch(Exception e) {
-        					player.sendMessage("§cAn error occured. Are you sure you put a number or maybe the list is too short?");
+        					player.sendMessage("Â§cAn error occured. Are you sure you put a number or maybe the list is too short?");
         				}
         			}else {
-        				player.sendMessage("§cUsage: /darkauction giveitem (number)");	
+        				player.sendMessage("Â§cUsage: /darkauction giveitem (number)");	
         			}
         			
         			
@@ -616,20 +621,20 @@ public class DarkAuction extends JavaPlugin implements Listener{
                 	 
                 	 return true;
                  }
-                 player.sendMessage("§cUnknown sub command. Type /darkauction for a list of sub commands.");
+                 player.sendMessage("Â§cUnknown sub command. Type /darkauction for a list of sub commands.");
         	}else {
-        		 player.sendMessage("§eDarkAuction all sub commands:");
+        		 player.sendMessage("Â§eDarkAuction all sub commands:");
         		 
-        		 player.sendMessage("§e/darkauction additem - Add into the random list the item in your hand");
-        		 player.sendMessage("§e/darkauction removeitem (number)");
-        		 player.sendMessage("§e/darkauction giveitem (number)");
-        		 player.sendMessage("§e/darkauction info - Get the list of all the items in the random list");
-        		 player.sendMessage("§e/darkauction setlocation - Set the hologram location in your position");
-        		 player.sendMessage("§e/darkauction reload - Reload config and messages of the plugin");
-        		 player.sendMessage("§e/darkauction forcestart");
-        		 player.sendMessage("§e/darkauction forcestop");
-        		 player.sendMessage("§e/darkauction checkforupdate");
-        		 player.sendMessage("§e/darkauction gui - [BETA (Made in 1.16)] Open a gui management for darkauction");
+        		 player.sendMessage("Â§e/darkauction additem - Add into the random list the item in your hand");
+        		 player.sendMessage("Â§e/darkauction removeitem (number)");
+        		 player.sendMessage("Â§e/darkauction giveitem (number)");
+        		 player.sendMessage("Â§e/darkauction info - Get the list of all the items in the random list");
+        		 player.sendMessage("Â§e/darkauction setlocation - Set the hologram location in your position");
+        		 player.sendMessage("Â§e/darkauction reload - Reload config and messages of the plugin");
+        		 player.sendMessage("Â§e/darkauction forcestart");
+        		 player.sendMessage("Â§e/darkauction forcestop");
+        		 player.sendMessage("Â§e/darkauction checkforupdate");
+        		 player.sendMessage("Â§e/darkauction gui - [BETA (Made in 1.16)] Open a gui management for darkauction");
         	}
         	return true;
         }
@@ -667,7 +672,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
 		for(Player plr : getServer().getOnlinePlayers()) {
 			if(loc != null)itemSender.sendItem(plr, currentlyItem, loc);
 		}
-		inv= Bukkit.createInventory(null, 9*6, "§0"+getName(currentlyItem)); //owner can be "null" or a player
+		inv= Bukkit.createInventory(null, 9*6, "Â§0"+getName(currentlyItem)); //owner can be "null" or a player
 		setupInv(inv);
 		
 	}
@@ -683,7 +688,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
 	}
 	public void notifyPlayers(String message) {
 		for(Player plr : getServer().getOnlinePlayers()) {
-			plr.sendMessage(getString("MESSAGES.darkauction-prefix")+"§f "+message);
+			plr.sendMessage(getString("MESSAGES.darkauction-prefix")+"Â§f "+message);
 		}
 	}
 	private boolean setupEconomy() {
@@ -736,7 +741,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
 							//TODO Implement customizable position and more offer options
 							inv.setItem(4, currentlyItem);
 							inv.setItem(5, makeTime());
-							inv.setItem(9*3+4, createGuiItem(Material.GOLD_INGOT,getString("MESSAGES.offer-msg-gui"),"§a"+money+getString("MESSAGES.currencysymbol")));
+							inv.setItem(9*3+4, createGuiItem(Material.GOLD_INGOT,getString("MESSAGES.offer-msg-gui"),"Â§a"+money+getString("MESSAGES.currencysymbol")));
 							});
 							}
 
@@ -851,21 +856,21 @@ public class DarkAuction extends JavaPlugin implements Listener{
 		VisibilityManager visibilityManager = hologram.getVisibilityManager();
         hologram.clearLines();
         if(isStarted) {
-        	hologram.appendTextLine("§b"+getName(currentlyItem));
+        	hologram.appendTextLine("Â§b"+getName(currentlyItem));
         	if(offers.size() < 1) {
-        		hologram.appendTextLine(getString("MESSAGES.initialOffer-hologram-msg")+" §a"+initialCost+getString("MESSAGES.currencysymbol"));
+        		hologram.appendTextLine(getString("MESSAGES.initialOffer-hologram-msg")+" Â§a"+initialCost+getString("MESSAGES.currencysymbol"));
         	}else {
         		Offer offer = getHigherOffer();
-        		hologram.appendTextLine(getString("MESSAGES.currentOffer-hologram-msg")+" §a"+offer.offer+getString("MESSAGES.currencysymbol"));
-        		hologram.appendTextLine("§6"+offer.playername);
+        		hologram.appendTextLine(getString("MESSAGES.currentOffer-hologram-msg")+" Â§a"+offer.offer+getString("MESSAGES.currencysymbol"));
+        		hologram.appendTextLine("Â§6"+offer.playername);
         		
         	}
-        	hologram.appendTextLine(getString("MESSAGES.dark-auction-endin")+" §e"+p2 + "h " + p3 + "m " + p1+"s");
-        	hologram.appendTextLine("§e"+getString("MESSAGES.method-for-see-theitem-hologram-msg"));
+        	hologram.appendTextLine(getString("MESSAGES.dark-auction-endin")+" Â§e"+p2 + "h " + p3 + "m " + p1+"s");
+        	hologram.appendTextLine("Â§e"+getString("MESSAGES.method-for-see-theitem-hologram-msg"));
         	
         }else {
         
-        	hologram.appendTextLine(getString("MESSAGES.auctionstarts-in-hologram-msg")+" §e"+p2 + "h " + p3 + "m " + p1+"s");
+        	hologram.appendTextLine(getString("MESSAGES.auctionstarts-in-hologram-msg")+" Â§e"+p2 + "h " + p3 + "m " + p1+"s");
         }
 		
 		for(Player plr : getServer().getOnlinePlayers()) 
@@ -896,30 +901,30 @@ public class DarkAuction extends JavaPlugin implements Listener{
 		//VisibilityManager visibilityManager = hologram.getVisibilityManager();
 		hologramAPI.clearLines();
         if(isStarted) {
-        	hologramAPI.appendTextLine("§b"+getName(currentlyItem));
+        	hologramAPI.appendTextLine("Â§b"+getName(currentlyItem));
         	if(offers.size() < 1) {
-        		hologramAPI.appendTextLine(getString("MESSAGES.initialOffer-hologram-msg")+" §a"+defaultFormat.format(initialCost)+getString("MESSAGES.currencysymbol"));
+        		hologramAPI.appendTextLine(getString("MESSAGES.initialOffer-hologram-msg")+" Â§a"+defaultFormat.format(initialCost)+getString("MESSAGES.currencysymbol"));
         	}else {
         		Offer offer = getHigherOffer();
-        		hologramAPI.appendTextLine(getString("MESSAGES.currentOffer-hologram-msg")+" §a"+defaultFormat.format(offer.offer)+getString("MESSAGES.currencysymbol"));
-        		hologramAPI.appendTextLine("§6"+offer.playername);
+        		hologramAPI.appendTextLine(getString("MESSAGES.currentOffer-hologram-msg")+" Â§a"+defaultFormat.format(offer.offer)+getString("MESSAGES.currencysymbol"));
+        		hologramAPI.appendTextLine("Â§6"+offer.playername);
         		
         	}
-        	hologramAPI.appendTextLine(getString("MESSAGES.dark-auction-endin")+" §e"+p2 + "h " + p3 + "m " + p1+"s");
-        	hologramAPI.appendTextLine("§e"+getString("MESSAGES.method-for-see-theitem-hologram-msg"));
+        	hologramAPI.appendTextLine(getString("MESSAGES.dark-auction-endin")+" Â§e"+p2 + "h " + p3 + "m " + p1+"s");
+        	hologramAPI.appendTextLine("Â§e"+getString("MESSAGES.method-for-see-theitem-hologram-msg"));
         	
         }else {
             if(time < 0) {
             	if(debug) {
-            		hologramAPI.appendTextLine("§cAn error occured? DarkAuction seem to not start the auction...");
-                	hologramAPI.appendTextLine("§cTry to see if the auction list is empty");
-                	hologramAPI.appendTextLine("§cAnd make sure the list is not lower than 2/3 items");
+            		hologramAPI.appendTextLine("Â§cAn error occured? DarkAuction seem to not start the auction...");
+                	hologramAPI.appendTextLine("Â§cTry to see if the auction list is empty");
+                	hologramAPI.appendTextLine("Â§cAnd make sure the list is not lower than 2/3 items");
             	}else {
-            		hologramAPI.appendTextLine("§cAn error occured while starting...");
+            		hologramAPI.appendTextLine("Â§cAn error occured while starting...");
             	}
             	
             }else {
-            	hologramAPI.appendTextLine(getString("MESSAGES.auctionstarts-in-hologram-msg")+" §e"+p2 + "h " + p3 + "m " + p1+"s");
+            	hologramAPI.appendTextLine(getString("MESSAGES.auctionstarts-in-hologram-msg")+" Â§e"+p2 + "h " + p3 + "m " + p1+"s");
             }
         	
         }
@@ -956,7 +961,7 @@ public class DarkAuction extends JavaPlugin implements Listener{
 		Bukkit.getScheduler().runTaskAsynchronously(DarkAuction.get(), () -> {
 			for(int i = 0; i < inv.getSize(); i++) {
 				//new ItemStack(Material.BLACK_STAINED_GLASS_PANE,1)
-				inv.setItem(i, GuiManager.createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "§7"));
+				inv.setItem(i, GuiManager.createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "Â§7"));
 			}
 			
         });
